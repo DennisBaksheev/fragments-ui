@@ -1,8 +1,35 @@
 // src/app.js
+import dotenv from 'dotenv';
+dotenv.config();
 
+import { createUserFragment } from './api';
 import { Auth, getUser } from './auth';
 import { getUserFragments } from './api';  // <- import added here
 
+const fragmentForm = document.querySelector('#fragmentForm');
+const fragmentText = document.querySelector('#fragmentText');
+
+fragmentForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const user = await getUser();
+    if (!user) {
+        console.error('User is not authenticated');
+        return;
+    }
+
+    const fragmentData = {
+        text: fragmentText.value,
+        // ... any other data you want to send
+    };
+
+    try {
+        await createUserFragment(user, fragmentData);
+        alert('Fragment stored successfully!');
+    } catch (err) {
+        alert('Failed to store fragment. Please try again.');
+    }
+});
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');

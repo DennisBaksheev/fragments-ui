@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Fragments UI</title>
     <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
-    <script src="./app.js"></script>
     
-
+    
+    <script src="./app.js" defer></script>
   </head>
   <body>
     <h1>Fragments UI</h1>
@@ -16,5 +16,10 @@
     <section hidden id="user">
       <h2>I hope this works <span class="username"></span>!</h2>
     </section>
-  </body>
+
+    <form id="fragmentForm">
+      <textarea id="fragmentText" placeholder="Enter your fragment text here..."></textarea>
+      <button type="submit">Submit Fragment</button>
+  </form>
+    </body>
 </html>
