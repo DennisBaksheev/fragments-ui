@@ -1,13 +1,20 @@
-// fragments microservice API, defaults to localhost:8080
+// Define the API URL for the fragments microservice, defaulting to localhost:8080
 const apiUrl = process.env.API_URL || 'http://localhost:8080';
 
+
+
 /**
- * Given an authenticated user, request all fragments for this user from the
- * fragments microservice (currently only running locally). We expect a user
- * to have an `idToken` attached, so we can send that along with the request.
+ * Fetches all fragments associated with a given user from the fragments microservice.
+ * Requires the user to be authenticated and have an `idToken`.
+ * 
+ * @param {Object} user - The authenticated user object.
+ * @param {boolean} expand - Flag to determine if additional data should be included in the response.
+ * @returns {Promise<Object>} The fetched data or an error message.
  */
 
-// GET ALL
+
+
+
 export async function getUserFragments(user, expand = false) {
   console.log('Requesting user fragments data...');
   console.log('apiUrl', apiUrl);
@@ -17,11 +24,9 @@ export async function getUserFragments(user, expand = false) {
     const res = await fetch(
       `${apiUrl}/v1/fragments${expand ? '?expand=1' : ''}`,
       {
-        // Generate headers with the proper Authorization bearer token to pass
-        headers: user.authorizationHeaders(),
+        headers: user.authorizationHeaders(), // Set authorization headers for the request.
       }
     );
-    // console.log('res', res);
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
@@ -33,46 +38,51 @@ export async function getUserFragments(user, expand = false) {
   }
 }
 
-// GET DATA BY ID
+/**
+ * Fetches specific fragment data by its ID.
+ * 
+ * @param {Object} user - The authenticated user object.
+ * @param {string} fragmentId - The ID of the fragment to fetch.
+ * @param {string} ext - Optional extension to specify the data format.
+ * @returns {Promise<string>} The fetched data in string format.
+ */
 export async function getFragmentDataById(user, fragmentId, ext) {
-  // const fragmentId = e.target.id;
   console.log('Getting fragment data by id...');
   try {
     const res = await fetch(
       `${apiUrl}/v1/fragments/${fragmentId}${ext ? `.${ext}` : ''}`,
       {
-        // Generate headers with the proper Authorization bearer token to pass
-        headers: user.authorizationHeaders(),
+        headers: user.authorizationHeaders(), // Set authorization headers for the request.
       }
     );
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
-    // const data = await res.json();
     console.log('Got user fragments by Id res', res);
     if (res.headers.get('Content-Type').includes('application/json')) {
       const data = await res.json();
       console.log('*** data', data);
       return JSON.stringify(data);
     } else {
-      // console.log('res.text()', await res.text());
       return await res.text();
     }
   } catch (err) {
-    console.error(`Unable to call GET ${apiUrl}/v1/fragments/${fragmentId}`, {
-      err,
-    });
+    console.error(`Unable to call GET ${apiUrl}/v1/fragments/${fragmentId}`, { err });
   }
 }
 
-// GET FRAGMENT BY ID
+/**
+ * Fetches fragment information by its ID.
+ * 
+ * @param {Object} user - The authenticated user object.
+ * @param {string} fragmentId - The ID of the fragment to fetch information for.
+ * @returns {Promise<Object>} The fetched fragment information.
+ */
 export async function getFragmentById(user, fragmentId) {
-  // const fragmentId = e.target.id;
   console.log('Getting fragment by id info...');
   try {
     const res = await fetch(`${apiUrl}/v1/fragments/${fragmentId}/info`, {
-      // Generate headers with the proper Authorization bearer token to pass
-      headers: user.authorizationHeaders(),
+      headers: user.authorizationHeaders(), // Set authorization headers for the request.
     });
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
@@ -81,16 +91,18 @@ export async function getFragmentById(user, fragmentId) {
     console.log('JSON data:', data);
     return data;
   } catch (err) {
-    console.error(
-      `Unable to call GET ${apiUrl}/v1/fragments/${fragmentId}/info`,
-      {
-        err,
-      }
-    );
+    console.error(`Unable to call GET ${apiUrl}/v1/fragments/${fragmentId}/info`, { err });
   }
 }
 
-// POST NEW FRAGMENT
+/**
+ * Submits a new fragment to the fragments microservice.
+ * 
+ * @param {Object} user - The authenticated user object.
+ * @param {string} fragment - The fragment data to submit.
+ * @param {string} dataType - The type of data being submitted.
+ * @returns {Promise<Object>} The response from the submission.
+ */
 export async function submitFragment(user, fragment, dataType) {
   console.log('Submitting fragment data...');
   console.log('apiUrl', apiUrl);
@@ -99,7 +111,7 @@ export async function submitFragment(user, fragment, dataType) {
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: 'POST',
-      headers: user.authorizationHeaders(dataType),
+      headers: user.authorizationHeaders(dataType), // Set authorization headers and content type for the request.
       body: fragment,
     });
     if (!res.ok) {
