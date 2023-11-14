@@ -5,6 +5,7 @@
   "description": "Fragments UI testing web app",
   "scripts": {
     "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
     "lint": "eslint 'src/**/*.{js,jsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,6 +26,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
+    "parcel": "^2.0.0", 
     "prettier": "^3.0.3"
   }
 }
