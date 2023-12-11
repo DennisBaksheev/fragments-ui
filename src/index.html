@@ -1,178 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fragments UI</title>
-    <!-- Foundation CSS for styling -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css"/>
-    <script type="module" src="./app.js"></script>
-    <style>
-        body {
-            background-color: rgb(54, 161, 40)
-        }
-        .navbar, .modal-card-head {
-            background-color: 54, 161, 40; /* Green for navbar and modal header */
-        }
-        .navbar .title, .modal-card-title {
-            color: white;
-        }
-        .button {
-            background-color: rgb(54, 161, 40); /* Green for buttons */
-            color: white;
-        }
-        .button.is-light {
-            background-color: #f5f5f5;
-            color: rgb(54, 161, 40);
-        }
-        .card-header-title {
-            color: rgb(54, 161, 40);
-        }
-        .notification {
-            background-color: #f5f5f5;
-            border-left: 4px solid rgb(54, 161, 40); /* Green border for notification */
-        }
-        .modal-card-foot .button.is-success {
-            background-color: #23d160;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container is-max-desktop">
-        <section class="section is-small">
-            <nav class="navbar">
-                <h1 class="title is-1">Fragments UI</h1>
-                <div class="navbar-end">
-                    <div>
-                        <button class="button" id="login">Login</button>
-                        <button class="button is-light" id="logout">Logout</button>
-                    </div>
-                </div>
-            </nav>
-            <h2 class="container has-text-right" id="user-greeting" hidden>
-                Hello <span id="username"></span>!
-            </h2>
-        </section>
-        <div hidden id="user">
-            <section class="section is-small">
-                <div class="card is-fluid">
-                    <div class="card-header">
-                        <p class="card-header-title">
-                            Fragment Submission
-                        </p>
-                    </div>
-                    <div class="card-content">
-                        <div class="columns is-vcentered is-desktop">
-                            <div class="column">
-                                <label class="label">Data:</label>
-                                <input class="input is-rounded" id="data" type="text" />
-                            </div>
-                            <div class="column is-two-fifths">
-                                <label class="label" for="data-type">Type:</label>
-                                <div class="select is-rounded is-fullwidth">
-                                    <select name="data-type" id="data-type">
-                                        <option value="text/plain">text/plain</option>
-                                        <option value="text/markdown">text/markdown</option>
-                                        <option value="text/html">text/html</option>
-                                        <option value="application/json">application/json</option>
-                                        <option value="image/png">image/png</option>
-                                        <option value="image/jpeg">image/jpeg</option>
-                                        <option value="image/webp">image/webp</option>
-                                        <option value="image/gif">image/gif</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column is-two-fifths">
-                            <p class="label">Fake JSON (for testing):</p>
-                            <div class="notification p-4">
-                                <div class="container has-text-right mb-2">
-                                    <button class="button is-light is-small" id="copy-btn">
-                                        Copy
-                                    </button>
-                                </div>
-                                <p id="fake-json">
-                                    { "name": "Dennis User", "age": 22, "email":
-                                    "dennis.b@example.com", "address": { "city": "Toronto",
-                                    "state": "ON", "zip": "29678" }, "skills": ["C++",
-                                    "C#","JavaScript", "Node.js"], "isStudent": false }
-                                </p>
-                            </div>
-                        </div>
-                        <div class="container has-text-right">
-                            <button class="button" id="data-submit">
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="section">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">Get Fragments</p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content">
-                            <label class="checkbox" for="expand">
-                                <input type="checkbox" name="expand" id="expand" />
-                                Expanded
-                                <em>(Please select)</em>
-                            </label>
-                        </div>
-                        <hr />
-                        <div class="content show-fragment-list" hidden>
-                            <div id="data-list">
-                                <h3>Your fragments:</h3>
-                                <table class="table is-striped is-hoverable" id="fragment-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Fragment</th>
-                                            <th>Extension Option</th>
-                                            <th>More</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="container has-text-right">
-                            <button class="button" id="get-data">Retrieve</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <h1>Fragments UI</h1>
+
+    <section>
+      <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
+    </section>
+
+    <section hidden id="user">
+      <h2>Hello <span class="username"></span>!</h2>
+    </section>
+
+    <section hidden id="content">
+      <div id="forms-container">
+        <form id="create-fragment-form">
+          <h2>Create New Fragment</h2>
+
+          <select
+            title="fragment-type-select"
+            name="fragment-type-select"
+            id="fragment-type-select"
+            required
+          >
+            <option value="">Select fragment type</option>
+            <option id="text-plain-option" value="text/plain">text/plain</option>
+            <option id="text-html-option" value="text/html">text/html</option>
+            <option id="text-markdown-option" value="text/markdown">text/markdown</option>
+            <option id="application-json-option" value="application/json">application/json</option>
+            <option id="image-png-option" value="image/png">image/png</option>
+            <option id="image-jpg-option" value="image/jpeg">image/jpeg</option>
+            <option id="image-webp-option" value="image/webp">image/webp</option>
+            <option id="image-gif-option" value="image/gif">image/gif</option>
+          </select>
+
+          <textarea
+            name="text-fragment"
+            id="text-fragment"
+            cols="30"
+            rows="4"
+            placeholder="Insert your fragment data here..."
+            hidden
+          ></textarea>
+
+          <textarea
+            name="json-fragment"
+            id="json-fragment"
+            cols="30"
+            rows="4"
+            placeholder="Insert valid json data here..."
+            hidden
+          ></textarea>
+
+          <input type="file" id="image-fragment" accept="image/*" hidden />
+
+          <div id="create-fragment-error" hidden></div>
+
+          <button class="submit-btn" type="submit">Submit</button>
+        </form>
+
+        <form id="view-fragment-form">
+          <h2>Get or Convert and Display a Fragment by ID</h2>
+
+          <input
+            type="text"
+            name="fragment-id"
+            id="fragment-id"
+            placeholder="Enter fragment ID or Add ID.txt, ID.html, ID.jpg for Conversion')"
+            required
+          />
+
+          <button class="submit-btn" type="submit">View</button>
+
+          <div id="get-fragment-error" hidden></div>
+        </form>
+      </div>
+
+      <div id="views-container">
+        <div id="user-fragments-table">
+          <h2>User Fragments</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Owner ID</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
         </div>
-    </div>
-    <!-- View Data Modal -->
-    <div id="modal-view-data" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="box has-text-centered">
-                <h5 class="title is-5">Fragment Data</h5>
-                <hr />
-                <div class="content">
-                    <p id="fragment-data-display"></p>
-                    <!-- Your content -->
-                </div>
+
+        <div id="fragment-view-container">
+          <div>
+            <h2>Fragment Display</h2>
+            <div id="fragment-view-content">
+              <pre></pre>
             </div>
+
+            <input
+              type="file"
+              id="update-image-fragment"
+              class="fragment-content"
+              hidden
+              style="margin-bottom: 10px"
+              accept="image/*"
+            />
+
+            <div id="update-fragment-error" hidden></div>
+
+            <button id="update-btn" class="submit-btn">Update</button>
+          </div>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-    <!-- View Info Modal -->
-    <div class="modal" id="modal-view-info">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Fragment Detail</p>
-                <button class="delete" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body" id="view-info-modal-card-body"></section>
-            <footer class="modal-card-foot">
-                <button class="button is-success" disabled>Save changes</button>
-                <button class="button">Cancel</button>
-            </footer>
-        </div>
-    </div>
-</body>
+      </div>
+    </section>
+  </body>
 </html>

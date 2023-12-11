@@ -38,11 +38,11 @@ async function getUser() {
     // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
     const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
+    // If that didn't throw, we have a user object, and the user is authenticated
+    console.log('The user is authenticated');
+
     // Get the user's username
     const username = currentAuthenticatedUser.username;
-
-    // If that didn't throw, we have a user object, and the user is authenticated
-    console.log('The user is authenticated', username);
 
     // Get the user's Identity Token, which we'll use later with our
     // microservice. See discussion of various tokens:
