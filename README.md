@@ -1,5 +1,9 @@
 # Fragments-UI 
 
+
+## Overview
+Fragments UI is the front-end web application for the Fragments Microservice. It provides a user-friendly interface for managing various types of fragments, including text, images, and JSON data.
+
 ## Features
 
 ### Docker Integration
