@@ -39,12 +39,41 @@ Fragments UI is the front-end web application for the Fragments Microservice. It
 
 ## Usage
 
-### Creating a Fragment
-1. Log in using AWS Cognito.
-2. Navigate to the fragment creation section.
-3. Enter the fragment data and select the type.
-4. Submit the fragment.
-
 ### Viewing Fragments
 1. Log in to view your fragments.
 2. Navigate to the fragments list section to view all your fragments and their metadata.
+
+### Updating a Fragment
+To update an existing fragment:
+1. **Inspect and Get Fragment ID**:
+   - Right-click on the page and select "Inspect" to open the Web Developer console.
+   - Navigate to the "Console" tab and locate the logged object that represents your fragment.
+   - Copy the `id` value from the object (e.g., `"3173aad6-a0ec-4e94-b228-db911bd5579c"`).
+
+2. **Enter Fragment ID for Retrieval or Conversion**:
+   - Paste the copied ID into the "Get or Convert and Display a Fragment by ID" field on the Fragments UI page.
+   - You may also add extensions like `.txt`, `.html`, `.jpg` for conversion purposes.
+   - Click the "View" button to retrieve and display the fragment.
+
+3. **Update Fragment Content**:
+   - Modify the fragment content in the "Fragment Display" field as needed.
+   - Click the "Update" button to save the changes.
+
+### Deleting a Fragment
+To delete a fragment:
+1. **Navigate to User Fragments Section**: View the list of your created fragments under the "User Fragments" section of the Fragments UI.
+2. **Select Fragment for Deletion**:
+   - Locate the fragment you wish to delete.
+   - Each fragment entry will have a corresponding "Delete" button.
+   - Click the "Delete" button next to the fragment you want to remove.
+
+
+## Deployment and Hosting
+
+The Fragments UI is hosted on Netlify and configured to interact with the Fragments Microservice backend hosted on AWS. The following steps were taken to ensure smooth integration between the front-end and back-end services:
+
+1. **Netlify Proxy Setup**: Implemented a proxy in Netlify (`/api/*`) to forward requests to the AWS Load Balancer. This setup helps in resolving mixed content issues and abstracts the API endpoint configuration.
+2. **Environment Variables**: Configured essential environment variables in Netlify for seamless connection to the AWS backend.
+3. **Secure Redirects**: Updated the OAuth redirect URLs to point to the Netlify hosted front-end, ensuring secure authentication flow with AWS Cognito.
+
+Visit the hosted front-end application here: [Fragments UI on Netlify](https://incandescent-madeleine-e2b4c2.netlify.app/)
