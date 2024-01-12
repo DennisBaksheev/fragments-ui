@@ -19,8 +19,8 @@ Amplify.configure({
       scope: ['email', 'phone', 'openid'],
 
       // Callback and Redirect URLs
-      redirectSignIn: 'http://localhost:1234',
-      redirectSignOut: 'http://localhost:1234',
+      redirectSignIn: 'https://incandescent-madeleine-e2b4c2.netlify.app/',
+      redirectSignOut: 'https://incandescent-madeleine-e2b4c2.netlify.app/',
 
       // We're using the Access Code Grant flow (i.e., `code`)
       responseType: 'code',
