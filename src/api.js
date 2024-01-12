@@ -1,4 +1,5 @@
-const apiUrl = process.env.API_URL || 'http://localhost:8080';
+// const apiUrl = process.env.API_URL || 'http://localhost:8080';
+const apiUrl = '/api';
 
 
 //  GET /v1/fragments?expand=1

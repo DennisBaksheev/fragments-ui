@@ -1,0 +1,15 @@
+# Netlify configuration file
+
+[build]
+  # Directory to which the build command outputs files
+  publish = "dist"
+  # Build command
+  command = "npm run build"
+
+# Redirects and proxy configuration
+[[redirects]]
+  # Forward all requests from /api/* to your AWS Load Balancer
+  from = "/api/*"
+  to = "http://myloadbalancer-595404775.us-east-1.elb.amazonaws.com/:splat"
+  status = 200
+  force = true
